@@ -22,7 +22,6 @@ void Dice::setValue(int i)
 
 void Dice::roll()
 {
-	srand(time(NULL));
 	value = rand() % 6 + 1;
 }
 
