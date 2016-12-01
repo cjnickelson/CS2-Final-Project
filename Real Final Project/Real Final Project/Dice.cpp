@@ -10,6 +10,11 @@ Dice::Dice(Dice* b)
 	value = (*b).getValue();
 }
 
+Dice::Dice(int b)
+{
+	value = b;
+}
+
 int Dice::getValue()
 {
 	return value;

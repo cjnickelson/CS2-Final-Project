@@ -12,6 +12,7 @@ private:
 public:
 	Dice();
 	Dice(Dice*);
+	Dice(int);
 	int getValue();
 	void setValue(int);
 	bool operator==(int);
