@@ -1,5 +1,7 @@
 #include<iostream>
 #include"Scorecard.h"
+#include<string>
+#include"Player.h"
 
 void addDie(Dice*, vector<Dice*>&);
 void firstRoll(vector<Dice*>&, int&);
@@ -12,7 +14,16 @@ using namespace std;
 int main()
 {
 	srand(time(NULL));
-	for (int turns = 1; turns <= 1; turns++)
+	cout << "Are you a new or returning player?" << endl;
+	cout << "New : 1" << endl << "returner: 2" << endl;
+	int player;
+	cin >> player;
+	cout << "Enter name. " << endl;
+	string name;
+	cin >> name;
+	Player p(name,player);
+
+	for (int turns = 1; turns <= 3; turns++)
 	{
 		int rolls = 0, kept = 0;
 		
@@ -22,11 +33,24 @@ int main()
 		newRoll(d, kept, rolls);
 		chooseKept(d, kept, rolls);
 		newRoll(d, kept, rolls);
-		Scorecard s;
-		s.setTwos(d);
-		cout << s.getTwos()<<endl;
+		if (turns == 1)
+		{
+			p.s.setTwos(d);
+			cout << p.s.getTwos() << endl;
+		}
+		else if (turns == 2)
+		{
+			p.s.setThrees(d);
+			cout << p.s.getThrees() << endl;
+		}
+		else
+		{
+			p.s.setFours(d);
+			cout << p.s.getFours() << endl;
+		}
 		cin.ignore();
 	}
+	//p.saveGame();
 }
 
 void addDie(Dice* die, vector<Dice*>& d)

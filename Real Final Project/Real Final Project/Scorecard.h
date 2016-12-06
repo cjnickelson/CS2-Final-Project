@@ -7,11 +7,10 @@ using namespace std;
 
 class Scorecard
 {
-	int ones = 0, twos = 0, threes = 0, fours = 0, fives = 0, sixes = 0;
-	int threeOfaKind = 0, fourOfaKind = 0, fullHouse = 0, smallStraight = 0, largeStraight = 0, Yahtzee = 0, chance = 0;
-	int upperScore = 0;
-	int lowerScore = 0;
 public:
+	int slots[16];
+public:
+	Scorecard();
 	int getOnes();
 	void setOnes(vector<Dice*>);
 	int getTwos();

@@ -10,77 +10,90 @@ int evaluateUpperScore(vector<Dice*> d, int n)
 	return total;
 }
 
-int Scorecard::getOnes() { return ones; }
+Scorecard::Scorecard() {
+	for (int i = 0; i < 16; i++)
+	{
+		slots[i] = 0;
+	}
+}
+
+int Scorecard::getOnes() { return slots[0]; }
 void Scorecard::setOnes(vector<Dice*> d)
 {
 	int score = evaluateUpperScore(d, 1);
-	ones = score;
+	slots[0] = score;
+	slots[13] += score;
 }
-int Scorecard::getTwos() { return twos; }
+int Scorecard::getTwos() { return slots[1]; }
 void Scorecard::setTwos(vector<Dice*> d)
 {
 	int score = evaluateUpperScore(d, 2);
-	twos = score;
+	slots[1] = score;
+	slots[13] += score;
 }
-int Scorecard::getThrees() { return threes; }
+int Scorecard::getThrees() { return slots[2]; }
 void Scorecard::setThrees(vector<Dice*> d)
 {
 	int score = evaluateUpperScore(d, 3);
-	threes = score;
+	slots[2] = score;
+	slots[13] += score;
 }
-int Scorecard::getFours() { return fours; }
+int Scorecard::getFours() { return slots[3]; }
 void Scorecard::setFours(vector<Dice*> d)
 {
 	int score = evaluateUpperScore(d, 4);
-	fours = score;
+	slots[3] = score;
+	slots[13] += score;
 }
-int Scorecard::getFives() { return fives; }
+int Scorecard::getFives() { return slots[4]; }
 void Scorecard::setFives(vector<Dice*> d)
 {
 	int score = evaluateUpperScore(d, 5);
-	fives = score;
+	slots[4] = score;
+	slots[13] += score;
 }
-int Scorecard::getSixes() { return sixes; }
+int Scorecard::getSixes() { return slots[5]; }
 void Scorecard::setSixes(vector<Dice*> d)
 {
 	int score = evaluateUpperScore(d, 6);
-	sixes = score;
+	slots[5] = score;
+	slots[13] += score;
 }
-int Scorecard::get3OAK() { return threeOfaKind; }
+int Scorecard::get3OAK() { return slots[6]; }
 void Scorecard::set3OAKs(vector<Dice*> d)
 {
 
 }
-int Scorecard::get4OAK() { return fourOfaKind; }
+int Scorecard::get4OAK() { return slots[7]; }
 void Scorecard::set4OAK(vector<Dice*> d)
 {
 
 }
-int Scorecard::getFullHouse() { return fullHouse; }
+int Scorecard::getFullHouse() { return slots[8]; }
 void Scorecard::setFullHouse(vector<Dice*> d)
 {
 
 }
-int Scorecard::getSStraight() { return smallStraight; }
+int Scorecard::getSStraight() { return slots[9]; }
 void Scorecard::setSStraight(vector<Dice*> d)
 {
 
 }
-int Scorecard::getLStraight() { return largeStraight; }
+int Scorecard::getLStraight() { return slots[10]; }
 void Scorecard::setLStraight(vector<Dice*> d)
 {
 
 }
-int Scorecard::getYahtzee() { return Yahtzee; }
+int Scorecard::getYahtzee() { return slots[11]; }
 void Scorecard::setYahtzee(vector<Dice*> d)
 {
 
 }
-int Scorecard::getChance() { return chance; }
+int Scorecard::getChance() { return slots[12]; }
 void Scorecard::setChance(vector<Dice*> d)
 {
 
 }
-int Scorecard::getUpperScore() { return upperScore; }
-int Scorecard::getLowerScore() { return lowerScore; }
-int Scorecard::getScore() { return lowerScore + upperScore; }
+int Scorecard::getUpperScore() { return slots[13]; }
+int Scorecard::getLowerScore() { return slots[14]; }
+int Scorecard::getScore() { return slots[15]; }
