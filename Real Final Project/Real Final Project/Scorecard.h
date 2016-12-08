@@ -24,7 +24,7 @@ public:
 	int getSixes();
 	void setSixes(vector<Dice*>);
 	int get3OAK();
-	void set3OAKs(vector<Dice*>);
+	void set3OAK(vector<Dice*>);
 	int get4OAK();
 	void set4OAK(vector<Dice*>);
 	int getFullHouse();

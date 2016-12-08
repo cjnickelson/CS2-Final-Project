@@ -5,19 +5,33 @@
 
 Player::Player(string playername, int j)
 {
+	name = playername;
 	string filename = playername + ".txt";
-	fstream file;
+
+	ifstream file;
+
 	file.open(filename);
+
 	
-	/*
+	
 	if (!file)
 	{
 		if (j == 2)
-			cout << "Your data could not be found." << endl;
-		return;
+			cout << "Previous data could not be found. A new account has been created." << endl;
+	}
+	else if (j == 1)
+	{
+		while (file)
+		{
+			cout << "Name is already used. Please re-enter" << endl;
+			file.close();
+			cin >> name;
+			string filename = name + ".txt";
+			file.open(filename);
+		}
 	}
 	else
-	{
+		{
 		string nameIgnore;
 		getline(file, nameIgnore);
 		file >> gamesPlayed;
@@ -36,7 +50,7 @@ Player::Player(string playername, int j)
 			file.ignore();
 		}
 	}
-	*/
+	
 }
 
 void Player::saveGame()
@@ -50,7 +64,7 @@ void Player::saveGame()
 		return;
 	}
 	file << name << endl;
-	file << gamesPlayed << endl;
+	/*file << gamesPlayed << endl;
 	file << scores.at(0);
 	for (int i = 1; i < scores.size(); i++)
 	{
@@ -60,7 +74,7 @@ void Player::saveGame()
 	for (int i = 0; i < 16; i++)
 	{
 		file << s.slots[i] << endl;
-	}
+	}*/
 	file.close();
 }
 

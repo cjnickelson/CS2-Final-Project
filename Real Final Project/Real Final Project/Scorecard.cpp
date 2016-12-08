@@ -10,6 +10,22 @@ int evaluateUpperScore(vector<Dice*> d, int n)
 	return total;
 }
 
+int evaluateTotal(vector<Dice*>d)
+{
+	int total = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		total += (*(d.at(i))).getValue();
+	}
+	return total;
+}
+
+vector<int> sortdice(vector<Dice*> d)
+{
+	vector<int> random;
+	return random;
+}
+
 Scorecard::Scorecard() {
 	for (int i = 0; i < 16; i++)
 	{
@@ -60,18 +76,71 @@ void Scorecard::setSixes(vector<Dice*> d)
 	slots[13] += score;
 }
 int Scorecard::get3OAK() { return slots[6]; }
-void Scorecard::set3OAKs(vector<Dice*> d)
+void Scorecard::set3OAK(vector<Dice*> d)
 {
-
+	bool correct = false;
+	for (int i = 1; i <= 6; i++)
+	{
+		int count = 0;
+		for (int j = 0; j < 5; j++)
+		{
+			if ((*(d.at(j))).getValue() == i)
+				count++;
+		}
+		if (count >= 3)
+		{
+			correct = true;
+		}
+	}
+	if (correct == false)
+		slots[6] = 0;
+	else
+		slots[6] = evaluateTotal(d);
 }
 int Scorecard::get4OAK() { return slots[7]; }
 void Scorecard::set4OAK(vector<Dice*> d)
 {
-
+	bool correct = false;
+	for (int i = 1; i <= 6; i++)
+	{
+		int count = 0;
+		for (int j = 0; j < 5; j++)
+		{
+			if ((*(d.at(j))).getValue() == i)
+				count++;
+		}
+		if (count >= 4)
+		{
+			correct = true;
+		}
+	}
+	if (correct == false)
+		slots[7] = 0;
+	else
+		slots[7] = evaluateTotal(d);
 }
 int Scorecard::getFullHouse() { return slots[8]; }
 void Scorecard::setFullHouse(vector<Dice*> d)
 {
+	int numbers[6] = { 0,0,0,0,0,0 };
+	int counts[6] = { 0,0,0,0,0,0 };
+	for (int i = 0; i < 5; i++)
+	{
+		numbers[(*(d.at(i))).getValue()-1]=1;
+		counts[(*(d.at(i))).getValue() - 1]++;
+	}
+	int sum = 0;
+	for (int i = 0; i < 6; i++)
+	{
+		sum += numbers[i];
+	}
+	if (sum != 2)
+	{
+		slots[8] = 0;
+	}
+	else if (counts[(*(d.at(0))).getValue() - 1] == 2 || counts[(*(d.at(0))).getValue() - 1] == 3)
+		slots[8] = 25;
+	else slots[8] = 0;
 
 }
 int Scorecard::getSStraight() { return slots[9]; }

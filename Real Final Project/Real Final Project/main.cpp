@@ -8,6 +8,7 @@ void firstRoll(vector<Dice*>&, int&);
 void replaceDie(Dice*, vector<Dice*>&, int);
 void newRoll(vector<Dice*>&, int, int&);
 void chooseKept(vector < Dice*>& , int&, int&);
+void scoreRoll(vector<Dice*>);
 
 using namespace std;
 
@@ -29,28 +30,33 @@ int main()
 		
 		vector<Dice*> d;
 		firstRoll(d, rolls);
+		cout << endl;
 		chooseKept(d, kept, rolls);
+		cout << endl;
 		newRoll(d, kept, rolls);
+		cout << endl;
 		chooseKept(d, kept, rolls);
+		cout << endl;
 		newRoll(d, kept, rolls);
+		//scoreRoll(d);
 		if (turns == 1)
 		{
-			p.s.setTwos(d);
-			cout << p.s.getTwos() << endl;
+			p.s.set3OAK(d);
+			cout << p.s.get3OAK() << endl;
 		}
 		else if (turns == 2)
 		{
-			p.s.setThrees(d);
-			cout << p.s.getThrees() << endl;
+			p.s.set4OAK(d);
+			cout << p.s.get4OAK() << endl;
 		}
 		else
 		{
-			p.s.setFours(d);
-			cout << p.s.getFours() << endl;
+			p.s.setFullHouse(d);
+			cout << p.s.getFullHouse() << endl;
 		}
 		cin.ignore();
 	}
-	//p.saveGame();
+	p.saveGame();
 }
 
 void addDie(Dice* die, vector<Dice*>& d)
@@ -104,7 +110,9 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 {
 	if (rolls == 3)
 		return;
-	cout << "Options:" << endl << "Add dice to those already kept: 1" << endl << "Reroll all 5 dice: 2" << endl << "Keep all dice: 3" << endl << "Change kept dice (pick new dice): 4" << endl;
+	cout << "Options:" << endl << "Add dice to those already kept:    1" <<endl<< "Roll same dice as previous roll:   2" << endl 
+		<< "Change kept dice (pick new dice):  3" << endl << "Reroll all 5 dice:                 4" 
+		<< endl << "Keep all dice:                     5" << endl;
 	int choice,value;
 	cin >> choice;
 	// copy the values of the dice into a new vector of ints to prevent cheating
@@ -119,7 +127,8 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 		int number;
 		cout << "How many new dice?" << endl;
 		cin >> number;
-		while (number < 0 || number>5)
+		cout << "Enter values of desired dice" << endl;
+		while (number < 0 || (kept+number)>5)
 		{
 			cout << "Invalid. Reenter." << endl;
 			cin >> number;
@@ -135,6 +144,7 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 					{
 						found = true;
 						copy.erase(copy.begin() + i);
+						break;
 					}
 				}
 				if (found)
@@ -149,13 +159,13 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 		}
 		kept += number;
 		break;
-	case 2:
+	case 4:
 		kept = 0;
 		break;
-	case 3:
+	case 5:
 		rolls = 3;
 		break;
-	case 4:
+	case 3:
 		cout << "How many do you want to keep?" << endl;
 		cin >> kept;
 		while (kept < 0 || kept>5)
@@ -163,6 +173,7 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 			cout << "Invalid. Reenter" << endl;
 			cin >> kept;
 		}
+		cout << "Enter values of desired dice" << endl;
 		for (int i = 0; i < kept; i++)
 		{
 			bool found = false;
@@ -187,7 +198,14 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 			}
 		}
 		break;
+	case 2:
+		break;
 	default:
 		cout << "Invalid entry, reenter" << endl;
 	}
+}
+
+void scoreRoll(vector<Dice*> d)
+{
+
 }
