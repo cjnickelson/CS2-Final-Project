@@ -8,7 +8,6 @@ void firstRoll(vector<Dice*>&, int&);
 void replaceDie(Dice*, vector<Dice*>&, int);
 void newRoll(vector<Dice*>&, int, int&);
 void chooseKept(vector < Dice*>& , int&, int&);
-void scoreRoll(vector<Dice*>);
 
 using namespace std;
 
@@ -38,25 +37,11 @@ int main()
 		chooseKept(d, kept, rolls);
 		cout << endl;
 		newRoll(d, kept, rolls);
-		//scoreRoll(d);
-		if (turns == 1)
-		{
-			p.s.set3OAK(d);
-			cout << p.s.get3OAK() << endl;
-		}
-		else if (turns == 2)
-		{
-			p.s.set4OAK(d);
-			cout << p.s.get4OAK() << endl;
-		}
-		else
-		{
-			p.s.setFullHouse(d);
-			cout << p.s.getFullHouse() << endl;
-		}
+		p.s.scoreRoll(d);
+		p.s.displayCard();
 		cin.ignore();
 	}
-	p.saveGame();
+	//p.saveGame();
 }
 
 void addDie(Dice* die, vector<Dice*>& d)
@@ -83,7 +68,7 @@ void firstRoll(vector<Dice*>& d, int& rolls)
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		cout << (*(d.at(i))).getValue() << " ";
+		cout << (*(d[i])).getValue() << " ";
 	}
 	cout << endl;
 }
@@ -101,7 +86,7 @@ void newRoll(vector<Dice*>& d, int kept, int& rolls)
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		cout << (*(d.at(i))).getValue() << " ";
+		cout << (*(d[i])).getValue() << " ";
 	}
 	cout << endl;
 }
@@ -119,7 +104,7 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 	vector<int> copy;
 	for (int i = 0; i < 5; i++)
 	{
-		copy.push_back((*(d.at(i))).getValue());
+		copy.push_back((*(d[i])).getValue());
 	}
 	switch (choice)
 	{
@@ -205,7 +190,3 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 	}
 }
 
-void scoreRoll(vector<Dice*> d)
-{
-
-}
