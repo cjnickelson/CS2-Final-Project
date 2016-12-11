@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// dice class used for rolling and scoring. Overloads == operator for ease of functions
 class Dice
 {
 private:

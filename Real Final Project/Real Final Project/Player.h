@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// player class contains a scorecard, as well as this players statistics stored in a vector of their previous scores
 class Player
 {
 	string name;
@@ -25,4 +26,5 @@ public:
 	double getAVGscore();
 	void incrementGamesPlayed();
 	void addFinalScore(int);
+	void clearGame();
 };

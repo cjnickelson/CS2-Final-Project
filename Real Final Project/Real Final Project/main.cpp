@@ -50,21 +50,24 @@ int main()
 				turns++;
 		}
 
-		cout << "Do you wish to continue?" << endl;
-		cout << "Yes, roll again:    1" << endl;
-		cout << "No, save and quit:  2" << endl;
-		int choice=0;
-		while (choice != 1 && choice != 2)
+		if (turns != 13)
 		{
-			cin >> choice;
-			if (choice != 1 && choice != 2)
+			cout << "Do you wish to continue?" << endl;
+			cout << "Yes, roll again:    1" << endl;
+			cout << "No, save and quit:  2" << endl;
+			int choice = 0;
+			while (choice != 1 && choice != 2)
 			{
-				cout << "Invalid entry." << endl;
-			}
-			if (choice == 2)
-			{
-				p.saveGame();
-				return 0;
+				cin >> choice;
+				if (choice != 1 && choice != 2)
+				{
+					cout << "Invalid entry." << endl;
+				}
+				if (choice == 2)
+				{
+					p.saveGame();
+					return 0;
+				}
 			}
 		}
 	}
@@ -73,6 +76,7 @@ int main()
 	int finalScore = p.s.getScore();
 	p.addFinalScore(finalScore);
 	cout << "Your final score is " << finalScore << endl;
+	p.clearGame();
 	p.saveGame();
 
 }
@@ -128,14 +132,18 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 {
 	if (rolls == 3)
 		return;
-	cout << "Options:" << endl << "Add dice to those already kept:    1" <<endl<< "Roll same dice as previous roll:   2" << endl 
-		<< "Change kept dice (pick new dice):  3" << endl << "Reroll all 5 dice:                 4" 
+	cout << "Options:" << endl << "Add dice to those already kept:    1" << endl << "Roll same dice as previous roll:   2" << endl
+		<< "Change kept dice (pick new dice):  3" << endl << "Reroll all 5 dice:                 4"
 		<< endl << "Keep all dice:                     5" << endl;
-	int choice,value;
+	int choice, value;
 	cin >> choice;
 	// copy the values of the dice into a new vector of ints to prevent cheating
 	vector<int> copy;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < copy.size(); i++)
+	{
+		copy[i] = (*(d[i])).getValue();
+	}
+	for (int i=copy.size();i<5;i++)
 	{
 		copy.push_back((*(d[i])).getValue());
 	}
