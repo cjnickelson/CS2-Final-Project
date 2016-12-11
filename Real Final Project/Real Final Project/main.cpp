@@ -1,4 +1,4 @@
-#include<iostream>
+
 #include"Scorecard.h"
 #include<string>
 #include"Player.h"
@@ -23,10 +23,12 @@ int main()
 	cin >> name;
 	Player p(name,player);
 
-	for (int turns = 1; turns <= 3; turns++)
+	int turns = 0;
+	while (turns<13)
 	{
-		int rolls = 0, kept = 0;
 		
+		int rolls = 0, kept = 0;
+
 		vector<Dice*> d;
 		firstRoll(d, rolls);
 		cout << endl;
@@ -40,8 +42,39 @@ int main()
 		p.s.scoreRoll(d);
 		p.s.displayCard();
 		cin.ignore();
+
+		turns = 0;
+		for (int i = 0; i < 13; i++)
+		{
+			if (p.s.used[i] == true)
+				turns++;
+		}
+
+		cout << "Do you wish to continue?" << endl;
+		cout << "Yes, roll again:    1" << endl;
+		cout << "No, save and quit:  2" << endl;
+		int choice=0;
+		while (choice != 1 && choice != 2)
+		{
+			cin >> choice;
+			if (choice != 1 && choice != 2)
+			{
+				cout << "Invalid entry." << endl;
+			}
+			if (choice == 2)
+			{
+				p.saveGame();
+				return 0;
+			}
+		}
 	}
-	//p.saveGame();
+	
+	p.incrementGamesPlayed();
+	int finalScore = p.s.getScore();
+	p.addFinalScore(finalScore);
+	cout << "Your final score is " << finalScore << endl;
+	p.saveGame();
+
 }
 
 void addDie(Dice* die, vector<Dice*>& d)
@@ -148,6 +181,10 @@ void chooseKept(vector<Dice*>& d, int& kept, int& rolls)
 		kept = 0;
 		break;
 	case 5:
+		for (int i = 0; i < 5; i++)
+		{
+			cout << (*(d[i])).getValue() << " ";
+		}
 		rolls = 3;
 		break;
 	case 3:

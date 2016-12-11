@@ -10,7 +10,8 @@ class Scorecard
 {
 public:
 	int slots[16];
-	bool used[16];
+	bool used[13];
+	int turns;
 public:
 	Scorecard();
 	void scoreRoll(vector<Dice*>);
@@ -44,4 +45,5 @@ public:
 	int getLowerScore();
 	int getScore();
 	void displayCard();
+	bool checkIfUsed(bool&, bool[],int&, int);
 };

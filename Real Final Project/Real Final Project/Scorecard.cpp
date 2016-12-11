@@ -1,5 +1,6 @@
 #include"Scorecard.h"
 #include<iomanip>
+#include<string>
 
 void Scorecard::scoreRoll(vector<Dice*> d)
 {
@@ -123,18 +124,14 @@ Scorecard::Scorecard() {
 		slots[i] = 0;
 		used[i] = false;
 	}
+	turns = 0;
 }
 
 int Scorecard::getOnes() { return slots[0]; }
 void Scorecard::setOnes(vector<Dice*> d, bool& b)
 {
-	b = used[0];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 0) == true)
 		return;
-	}
-	used[0] = true;
 	int score = evaluateUpperScore(d, 1);
 	slots[0] = score;
 	slots[13] += score;
@@ -142,13 +139,8 @@ void Scorecard::setOnes(vector<Dice*> d, bool& b)
 int Scorecard::getTwos() { return slots[1]; }
 void Scorecard::setTwos(vector<Dice*> d, bool& b)
 {
-	b = used[1];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 1) == true)
 		return;
-	}
-	used[1] = true;
 	int score = evaluateUpperScore(d, 2);
 	slots[1] = score;
 	slots[13] += score;
@@ -156,13 +148,8 @@ void Scorecard::setTwos(vector<Dice*> d, bool& b)
 int Scorecard::getThrees() { return slots[2]; }
 void Scorecard::setThrees(vector<Dice*> d, bool& b)
 {
-	b = used[2];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 2) == true)
 		return;
-	}
-	used[2] = true;
 	int score = evaluateUpperScore(d, 3);
 	slots[2] = score;
 	slots[13] += score;
@@ -170,13 +157,8 @@ void Scorecard::setThrees(vector<Dice*> d, bool& b)
 int Scorecard::getFours() { return slots[3]; }
 void Scorecard::setFours(vector<Dice*> d, bool& b)
 {
-	b = used[3];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 3) == true)
 		return;
-	}
-	used[3] = true;
 	int score = evaluateUpperScore(d, 4);
 	slots[3] = score;
 	slots[13] += score;
@@ -184,13 +166,8 @@ void Scorecard::setFours(vector<Dice*> d, bool& b)
 int Scorecard::getFives() { return slots[4]; }
 void Scorecard::setFives(vector<Dice*> d, bool& b)
 {
-	b = used[4];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 4) == true)
 		return;
-	}
-	used[4] = true;
 	int score = evaluateUpperScore(d, 5);
 	slots[4] = score;
 	slots[13] += score;
@@ -198,13 +175,8 @@ void Scorecard::setFives(vector<Dice*> d, bool& b)
 int Scorecard::getSixes() { return slots[5]; }
 void Scorecard::setSixes(vector<Dice*> d, bool& b)
 {
-	b = used[5];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 5) == true)
 		return;
-	}
-	used[5] = true;
 	int score = evaluateUpperScore(d, 6);
 	slots[5] = score;
 	slots[13] += score;
@@ -212,13 +184,8 @@ void Scorecard::setSixes(vector<Dice*> d, bool& b)
 int Scorecard::get3OAK() { return slots[6]; }
 void Scorecard::set3OAK(vector<Dice*> d, bool& b)
 {
-	b = used[6];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 6) == true)
 		return;
-	}
-	used[6] = true;
 	bool correct = false;
 	for (int i = 1; i <= 6; i++)
 	{
@@ -237,17 +204,13 @@ void Scorecard::set3OAK(vector<Dice*> d, bool& b)
 		slots[6] = 0;
 	else
 		slots[6] = evaluateTotal(d);
+	slots[14] += slots[6];
 }
 int Scorecard::get4OAK() { return slots[7]; }
 void Scorecard::set4OAK(vector<Dice*> d, bool& b)
 {
-	b = used[7];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 7) == true)
 		return;
-	}
-	used[7] = true;
 	bool correct = false;
 	for (int i = 1; i <= 6; i++)
 	{
@@ -266,17 +229,13 @@ void Scorecard::set4OAK(vector<Dice*> d, bool& b)
 		slots[7] = 0;
 	else
 		slots[7] = evaluateTotal(d);
+	slots[14] += slots[7];
 }
 int Scorecard::getFullHouse() { return slots[8]; }
 void Scorecard::setFullHouse(vector<Dice*> d, bool& b)
 {
-	b = used[8];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 8) == true)
 		return;
-	}
-	used[8] = true;
 	int numbers[6] = { 0,0,0,0,0,0 };
 	int counts[6] = { 0,0,0,0,0,0 };
 	for (int i = 0; i < 5; i++)
@@ -296,18 +255,14 @@ void Scorecard::setFullHouse(vector<Dice*> d, bool& b)
 	else if (counts[(*(d.at(0))).getValue() - 1] == 2 || counts[(*(d.at(0))).getValue() - 1] == 3)
 		slots[8] = 25;
 	else slots[8] = 0;
+	slots[14] += slots[8];
 
 }
 int Scorecard::getSStraight() { return slots[9]; }
 void Scorecard::setSStraight(vector<Dice*> d, bool& b)
 {
-	b = used[9];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 9) == true)
 		return;
-	}
-	used[9] = true;
 	int numbers[6] = { 0,0,0,0,0,0 };
 	for (int i = 0; i < 5; i++)
 	{
@@ -318,17 +273,13 @@ void Scorecard::setSStraight(vector<Dice*> d, bool& b)
 	else if ((numbers[0] == 1 && numbers[1] == 1) || (numbers[1] == 1 && numbers[4] == 1) || (numbers[4] == 1 && numbers[5] == 1))
 		slots[9] = 30;
 	else slots[9] = 0;
+	slots[14] += slots[9];
 }
 int Scorecard::getLStraight() { return slots[10]; }
 void Scorecard::setLStraight(vector<Dice*> d, bool& b)
 {
-	b = used[10];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 10) == true)
 		return;
-	}
-	used[10] = true;
 	int numbers[6] = { 0,0,0,0,0,0 };
 	for (int i = 0; i < 5; i++)
 	{
@@ -339,6 +290,7 @@ void Scorecard::setLStraight(vector<Dice*> d, bool& b)
 	else if (numbers[0] == 0 && numbers[5] == 0)
 		slots[10] = 0;
 	else slots[10] = 40;
+	slots[14] += slots[10];
 }
 int Scorecard::getYahtzee() { return slots[11]; }
 void Scorecard::setYahtzee(vector<Dice*> d, bool& b)
@@ -368,29 +320,42 @@ void Scorecard::setYahtzee(vector<Dice*> d, bool& b)
 	if (yaht == 4)
 		slots[11] = 50;
 	else slots[11] = 0;
+	slots[14] += slots[11];
 }
 int Scorecard::getChance() { return slots[12]; }
 void Scorecard::setChance(vector<Dice*> d, bool& b)
 {
-	b = used[12];
-	if (b == true)
-	{
-		cout << "Category already used. Please select another." << endl;
+	if (checkIfUsed(b, used, turns, 12) == true)
 		return;
-	}
-	used[12] = true;
 	slots[12] = evaluateTotal(d);
+	slots[14] += slots[12];
 }
 int Scorecard::getUpperScore() { return slots[13]; }
 int Scorecard::getLowerScore() { return slots[14]; }
-int Scorecard::getScore() { return slots[15]; }
+int Scorecard::getScore() { 
+	slots[15] = slots[13] + slots[14];
+	return slots[15]; }
 
 void Scorecard::displayCard()
 {
+	string categoryNames[12] = { "1's","2's", "3's", "4's", "5's", "6's", "3OAK", "4OAK", "FH", "SS", "LS", "Yaht"};
 	cout << endl;
 	for (int i = 0; i < 6; i++)
 	{
-		cout <<setw(2)<< slots[i] <<"    " << slots[i+6]<< endl;
+		cout <<categoryNames[i]<<setw(2)<< (used[i]==false? 00 : slots[i]) <<"    " <<setw(4)<< categoryNames[i+6]<<
+			setw(3)<<(used[i+6] == false ? 00 : slots[i+6])<< endl;
 	}
-	cout << "      " << slots[12] << endl<<endl;
+	cout << "         Chan" <<setw(3)<< (used[12] == false ? 00 : slots[12]) << endl<<endl;
+}
+
+bool Scorecard:: checkIfUsed(bool&b, bool used[], int& turns, int n)
+{
+	b = used[n];
+	if (b == true)
+	{
+		cout << "Category already used. Please select another." << endl;
+		return true;
+	}
+	used[n] = true;
+	return false;
 }

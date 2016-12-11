@@ -23,4 +23,6 @@ public:
 	string getName();
 	int getHighScore();
 	double getAVGscore();
+	void incrementGamesPlayed();
+	void addFinalScore(int);
 };

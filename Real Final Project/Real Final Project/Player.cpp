@@ -12,7 +12,8 @@ Player::Player(string playername, int j)
 
 	file.open(filename);
 
-	
+	gamesPlayed = 0, highScore = 0, avgScore = 0;
+	scores.push_back(0);
 	
 	if (!file)
 	{
@@ -36,6 +37,13 @@ Player::Player(string playername, int j)
 		getline(file, nameIgnore);
 		file >> gamesPlayed;
 		file.ignore();
+		if (gamesPlayed == 0)
+		{
+			int storage;
+			file>>storage;
+			file.ignore();
+			scores.push_back(0);
+		}
 		for (int i = 0; i < gamesPlayed; i++)
 		{
 			int temp;
@@ -46,8 +54,12 @@ Player::Player(string playername, int j)
 		{
 			int slot;
 			file >> slot;
-			s.slots[i] == slot;
+			s.slots[i] = slot;
 			file.ignore();
+		}
+		for (int i = 0; i < 13; i++)
+		{
+			file >> s.used[i];
 		}
 	}
 	
@@ -55,6 +67,7 @@ Player::Player(string playername, int j)
 
 void Player::saveGame()
 {
+	s.slots[15] = s.slots[13] + s.slots[14];
 	string filename = name + ".txt";
 	ofstream file;
 	file.open(filename);
@@ -64,17 +77,25 @@ void Player::saveGame()
 		return;
 	}
 	file << name << endl;
-	/*file << gamesPlayed << endl;
-	file << scores.at(0);
-	for (int i = 1; i < scores.size(); i++)
-	{
-		file << " " << scores.at(i);
+	file << gamesPlayed << endl;
+	if (gamesPlayed == 0)
+		file << 0<<endl;
+	else {
+		file << scores[0];
+		for (int i = 1; i < scores.size(); i++)
+		{
+			file << " " << scores[i];
+		}
+		file << endl;
 	}
-	file << endl;
 	for (int i = 0; i < 16; i++)
 	{
 		file << s.slots[i] << endl;
-	}*/
+	}
+	for (int i = 0; i < 13; i++)
+	{
+		file << s.used[i] << " ";
+	}
 	file.close();
 }
 
@@ -121,4 +142,14 @@ double Player::getAVGscore()
 	}
 	double avg = total / scores.size();
 	return avg;
+}
+
+void Player:: incrementGamesPlayed()
+{
+	gamesPlayed++;
+}
+
+void Player::addFinalScore(int finalScore)
+{
+	scores.push_back(finalScore);
 }
