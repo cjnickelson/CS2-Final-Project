@@ -16,13 +16,13 @@ class Player
 public:
 	Scorecard s;
 	Player(string, int);
-
 	void saveGame();
 	void getStats();
 	int getGamesPlayed();
 	vector<int> getScores();
 	string getName();
 	int getHighScore();
+	int getLowScore();
 	double getAVGscore();
 	void incrementGamesPlayed();
 	void addFinalScore(int);

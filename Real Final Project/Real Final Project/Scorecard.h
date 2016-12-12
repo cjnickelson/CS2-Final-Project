@@ -6,13 +6,21 @@
 
 using namespace std;
 
+// this class is used to track the scores and status (used/unused) for each of 13 categories and the 3 totals (upper, lower, and total) and scoring to these categories from the set of 5 dice
 class Scorecard
 {
-public:
 	int slots[16];
 	bool used[13];
 public:
 	Scorecard();
+	int getSlots(int);
+	void setSlots(int, int);
+	bool getUsed(int);
+	void setUsed(int, bool);
+	int Scorecard::evaluateUpperScore(vector<Dice*> d, int n);
+	int Scorecard::evaluateTotal(vector<Dice*>d);
+	void displayCard();
+	bool checkIfUsed(bool&, bool[], int);
 	void scoreRoll(vector<Dice*>);
 	int getOnes();
 	void setOnes(vector<Dice*>, bool& b);
@@ -43,6 +51,5 @@ public:
 	int getUpperScore();
 	int getLowerScore();
 	int getScore();
-	void displayCard();
-	bool checkIfUsed(bool&, bool[], int);
+	
 };
