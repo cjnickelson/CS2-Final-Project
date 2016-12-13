@@ -43,7 +43,7 @@ Player::Player(string playername, int j)
 	}
 	// finally, if a returning player's file is found, we retrieve the data from it
 	else
-		{
+	{
 		// create a string to store the name which appears at the top of the file
 		string nameIgnore;
 		// get and ignore that name
@@ -85,6 +85,7 @@ Player::Player(string playername, int j)
 			file >> b;
 			s.setUsed(i,b);
 		}
+		s.displayCard();
 	}
 	file.close();
 }
@@ -188,7 +189,7 @@ int Player::getLowScore()
 double Player::getAVGscore()
 {
 	// initializes a counter variable to 0
-	int total = 0;
+	double total = 0;
 	// for each value in the vector of scores, total is increased by the contents
 	for (int i = 0; i < scores.size(); i++)
 	{

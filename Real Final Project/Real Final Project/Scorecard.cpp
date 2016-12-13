@@ -43,46 +43,46 @@ void Scorecard::scoreRoll(vector<Dice*> d)
 	while (used)
 	{
 		// create decision variables and initialize them to unacceptable values, again so the while loop is guaranteed to execute once
-		int choice = 0, choice2 = 0;
-		char choice3 = 'q';
+		char choice = '0', choice2 = '0', choice3 = 'q';
 		// continue getting a number from the user until they enter something valid
-		while (choice != 1 && choice != 2 && choice != 3)
+		while (choice != '1' && choice != '2' && choice != '3' && choice != '4')
 		{
 			// ask them if they want to apply their score to the "upper" half of the card or the "lower"
-			cout << "What would you like to do?" << endl << "Score roll to upper portion:    1" << endl << "Score roll to lower portion:    2" << endl << "View your scorecard:            3" << endl;
+			cout << "What would you like to do?" << endl << "Score roll to upper portion:    1" << endl << "Score roll to lower portion:    2" << endl << "View your scorecard:            3" << endl
+				<< "View your roll:                 4" << endl;
 			// get this value
 			cin >> choice;
 			switch (choice)
 			{
 				// for the case of upper, we only need now to ask which number. We also give them the option of returning to the previous junction
-			case 1:
+			case '1':
 				cout << "Which number would you like to score to? To go back, choose 7." << endl;
 				// continue retrieving values form the user until something valid is entered
-				while (choice2 < 1 || choice2>7)
+				while (choice2 != '1'&&choice2 != '2'&&choice2 != '3'&&choice2 != '4'&&choice2 != '5'&&choice2 != '6'&&choice2 != '7')
 				{
 					cin >> choice2;
 					// for each number enetered, call the correct scoring function from below. Also, the used variable is passed in by reference, so the while loop will continue to run if each category has been used
 					switch (choice2)
 					{
-					case 1:
+					case '1':
 						setOnes(d, used); 
 						break;
-					case 2:
+					case '2':
 						setTwos(d, used);
 						break;
-					case 3:
+					case '3':
 						setThrees(d, used);
 						break;
-					case 4:
+					case '4':
 						setFours(d, used);
 						break;
-					case 5:
+					case '5':
 						setFives(d, used);
 						break;
-					case 6:
+					case '6':
 						setSixes(d, used);
 						break;
-					case 7:
+					case '7':
 						choice = 0;
 						break;
 					default:
@@ -92,8 +92,8 @@ void Scorecard::scoreRoll(vector<Dice*> d)
 				}
 				break;
 				// in the case of the lower score, we have the choice variable as a char, such that the abbreviations make more sense
-			case 2:
-				cout << "Which category do you want to score to?" << endl;
+			case '2':
+				cout <<endl<< "Which category do you want to score to?" << endl;
 				cout << "Three of a Kind: 3" << endl<< "Four of a kind:  4" << endl<< "Full House:      f" << endl<<"Small straight:  s" << endl<< "Large straight:  l" << endl
 				<< "Yahtzee:         y" << endl<< "Chance:          c" << endl<< "Go back:         b" << endl;
 				while (choice3 != '3'&&choice3 != '4'&&choice3 != 'f'&&choice3 != 's'&&choice3 != 'l'&&choice3 != 'y'&&choice3 != 'c'&&choice3!='b')
@@ -132,12 +132,22 @@ void Scorecard::scoreRoll(vector<Dice*> d)
 					}
 				}
 				break;
-			case 3:
+			case '3':
 				// display the card when requested
 				displayCard();
 				break;
+			case '4':
+				// show the user their dice
+				cout << endl;
+				for (int i = 0; i < 5; i++)
+				{
+					cout << (*(d[i])).getValue() << " ";
+				}
+				cout << endl << endl;
+				break;
 			default:
 				cout << "Invalid entry." << endl;
+				break;
 			}
 		}
 	}
@@ -182,10 +192,10 @@ void Scorecard::displayCard()
 	{
 		// print out the first and seventh category names, followed by their values. If the category is unused, a blank space is output, otherwise, the scored value is shown
 		cout << categoryNames[i] << setw(3) << (used[i] == false ? "  " : to_string(slots[i])) << "    " << setw(4) << categoryNames[i + 6] <<
-			setw(3) << (used[i + 6] == false ? "  " : to_string(slots[i + 6])) << endl;
+			setw(4) << (used[i + 6] == false ? "  " : to_string(slots[i + 6])) << endl;
 	}
 	// for the final seventh row, do the same for the chance category, keeping it in line with the other lower scores
-	cout << "          Chan" << setw(3) << (used[12] == false ? "  " : to_string(slots[12])) << endl << endl;
+	cout << "          Chan" << setw(4) << (used[12] == false ? "  " : to_string(slots[12])) << endl << endl;
 }
 // This function disallows the user to attempt to use the same category multiple times in the same game
 bool Scorecard::checkIfUsed(bool&b, bool used[], int n) // takes a pass by reference bool, the vector os used categories and an int n, the indicator of which category is being referred to
@@ -426,23 +436,25 @@ void Scorecard::setYahtzee(vector<Dice*> d, bool& b)
 	// for the four dice following the first, see if they are all ewual to the first
 	for (int i = 1; i < 5; i++)
 	{
-		yaht += ((*(d[i])).getValue() == (*(d[0])).getValue() ? 1 : 0);
+		// since, the bonus yahtzee clears all dice to 0, a yahtzee should only be true if they are not equal to 0. add this check
+		yaht += (((*(d[i])).getValue() == (*(d[0])).getValue())&& (*(d[0])).getValue() !=0? 1 : 0);
 	}
 	// set the pass by reference bool equal to the status of the used vector at the yahtzee location
 	b = used[11];
 	// if the category has already been used, and the roller did not roll a yahtzee, tell them to choose something else
 	if (b == true && yaht!=4)
 	{
-		cout << "Category already used. Please select another." << endl;
+		cout << endl << "Category already used. Please select another." << endl << endl;
 		return;
 	}
 	// however, even if the category has been used, they can score a bonus yahtzee if they already have at least one yahtzee for the game
-	if (b==true && yaht == 40 && slots[11]!=0)
+	if (b==true && yaht == 4 && slots[11]!=0)
 	{
 		// bonus yahtzees are worth 100
 		slots[11] += 100;
 		// the player is required to scratch a category in substitution for their bonus yahtzee
-		cout << "Bonus Yahtzee! Please select a category to substitute for." << endl;
+		cout << endl<< "Bonus Yahtzee! Please select a category to substitute for." << endl;
+		displayCard();
 		// set each of the dice to 0, so that nothing is scored on thier substitution
 		for (int i = 0; i < 5; i++)
 		{

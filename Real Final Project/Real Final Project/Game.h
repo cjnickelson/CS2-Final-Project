@@ -5,5 +5,11 @@
 
 class Game
 {
-	Player p;
+public:
+	Game();
+	void addDie(Dice*, vector<Dice*>&);
+	void firstRoll(vector<Dice*>&, int&);
+	void replaceDie(Dice*, vector<Dice*>&, int);
+	void newRoll(vector<Dice*>&, int, int&);
+	void chooseKept(vector < Dice*>&, int&, int&);
 };
