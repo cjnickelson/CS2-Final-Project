@@ -1,5 +1,6 @@
 #include"Dice.h"
 #include"Game.h"
+#include"Scorecard.h"
 
 Game::Game()
 {
