@@ -10,8 +10,6 @@ class Player
 {
 	string name;
 	int gamesPlayed;
-	int highScore;
-	double avgScore;
 	vector<int> scores;
 public:
 	Scorecard s;

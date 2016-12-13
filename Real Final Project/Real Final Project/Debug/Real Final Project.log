@@ -1,3 +1,7 @@
-﻿  Scorecard.cpp
+﻿  Player.cpp
+z:\cs172-1\real final project\real final project\real final project\player.cpp(114): warning C4018: '<': signed/unsigned mismatch
+z:\cs172-1\real final project\real final project\real final project\player.cpp(168): warning C4018: '<': signed/unsigned mismatch
+z:\cs172-1\real final project\real final project\real final project\player.cpp(180): warning C4018: '<': signed/unsigned mismatch
+z:\cs172-1\real final project\real final project\real final project\player.cpp(194): warning C4018: '<': signed/unsigned mismatch
   Real Final Project.vcxproj -> Z:\CS172-1\Real Final Project\Real Final Project\Debug\Real Final Project.exe
   Real Final Project.vcxproj -> Z:\CS172-1\Real Final Project\Real Final Project\Debug\Real Final Project.pdb (Full PDB)

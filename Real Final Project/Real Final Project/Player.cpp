@@ -16,7 +16,7 @@ Player::Player(string playername, int j)
 	// attempts to open this file
 	file.open(filename);
 	// initializes these statistics to 0 for each new player (will be overwritten if it turns out to be a returning player)
-	gamesPlayed = 0, highScore = 0, avgScore = 0;
+	gamesPlayed = 0;
 	scores.push_back(0);
 	// if the file fails, we must distinguish whether the player thought he was a returner. 
 	if (!file)

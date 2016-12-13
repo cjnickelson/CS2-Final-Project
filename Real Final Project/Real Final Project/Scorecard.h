@@ -17,8 +17,8 @@ public:
 	void setSlots(int, int);
 	bool getUsed(int);
 	void setUsed(int, bool);
-	int Scorecard::evaluateUpperScore(vector<Dice*> d, int n);
-	int Scorecard::evaluateTotal(vector<Dice*>d);
+	int evaluateUpperScore(vector<Dice*> d, int n);
+	int evaluateTotal(vector<Dice*>d);
 	void displayCard();
 	bool checkIfUsed(bool&, bool[], int);
 	void scoreRoll(vector<Dice*>);
